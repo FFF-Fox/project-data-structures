@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 
 namespace trie
 {
@@ -7,7 +8,7 @@ struct node_element
     char letter;
     bool wordContained;
 
-    node *child;
+    node* child;
 };
 
 struct node
