@@ -7,7 +7,16 @@ PUBLIC
     $<INSTALL_INTERFACE:include/Trie>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/Trie>
 PRIVATE
-    $<${CMAKE_CURRENT_SOURCE_DIR}/src/Trie
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Trie
+)
+
+add_library (CLI src/CLI/Cli.cpp)
+target_include_directories (CLI
+PUBLIC
+    $<INSTALL_INTERFACE:include/CLI>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/CLI>
+PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Cli.cpp
 )
 
 add_executable (
@@ -18,4 +27,5 @@ add_executable (
 
 target_link_libraries (main
     Trie
+    CLI
 )
