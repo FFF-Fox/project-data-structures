@@ -1,33 +1,29 @@
 #pragma once
-#include <vector>
+#include <string>
+
+#define AB_size 26
 
 namespace trie
 {
-// typedef std::vector<node_element> node;
-
-struct node
+class Node
 {
-    struct node_element
-    {
-        std::vector<node_element> elements;
-        char letter;
-        bool wordContained;
+  public:
+    Node *children[AB_size];
+    bool eow;
+    int total_children;
 
-        node *child;
-    };
-
-    std::vector<node_element> elements;
+    Node();
 };
-
 class Trie
 {
   private:
-    node *root;
+    Node *root;
 
   public:
-    Trie() : root(new node){};
+    Trie();
 
-    bool find(const char *x);
-    void insert(const char *x);
+    bool find(std::string s);
+    void insert(std::string s);
+    void remove(std::string s);
 };
 } // namespace trie

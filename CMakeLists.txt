@@ -12,8 +12,10 @@ PRIVATE
 
 add_executable (
     main
-    src/trie_main.cpp)
+    src/trie_main.cpp
+)
 
 
 target_link_libraries (main
-    Trie)
+    Trie
+)
