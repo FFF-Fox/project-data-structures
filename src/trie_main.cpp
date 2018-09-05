@@ -2,8 +2,6 @@
 #include "Cli.h"
 #include "Trie.h"
 
-void greet(std::string msg);
-
 void make_trie_cli(cli::Cli& trie_cli, trie::Trie &t);
 
 int main()
@@ -17,11 +15,6 @@ int main()
     return 0;
 }
 
-void greet(std::string msg)
-{
-    std::cout << msg << std::endl;
-}
-
 void make_trie_cli(cli::Cli& trie_cli, trie::Trie &t)
 {
     std::string menu =
@@ -29,8 +22,6 @@ void make_trie_cli(cli::Cli& trie_cli, trie::Trie &t)
 2 - πρόσθεση
 3 - διαγραφή
 q - έξοδος)";
-
-    // cli::Cli trie_cli;
 
     trie_cli.set_menu_message(menu);
 
