@@ -9,7 +9,7 @@ int main()
     
     cli::Cli trie_cli;
 
-    
+    trie_cli.start();
 
     return 0;
 }

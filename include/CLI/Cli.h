@@ -19,6 +19,7 @@ class Cli
     void add_command(std::string name, void (*handler)());
 
     void show_menu();
+    void show_error();
     std::string parse_user_input();
     void start();
 };

@@ -1,4 +1,5 @@
 #include "Cli.h"
+#include <iostream>
 
 namespace cli
 {
@@ -29,14 +30,43 @@ void Cli::add_command(std::string name, void (*handler)())
     commands->emplace(name, handler);
 }
 
+void Cli::show_menu()
+{
+    std::cout << menu_msg << std::endl;
+    std::cout << "> ";
+}
+
+void Cli::show_error()
+{
+    std::cout << command_not_found_msg << std::endl;
+}
+
+std::string Cli::parse_user_input()
+{
+    std::string user_in;
+    std::cin >> user_in;
+
+    return user_in;
+}
+
 void Cli::start()
 {
-    // while (true)
-    // {
-    //     show_menu();
-    //     std::string usr_in = parse_user_input();
-    //     // commands->find(usr_in);
-    // }
+    while (true)
+    {
+        show_menu();
+        std::string user_in = parse_user_input();
+
+        // std::cout << "Entered: " << user_in << std::endl;
+
+        if (commands->find(user_in) == commands->end())
+        {
+            show_error();
+        }
+        else
+        {
+            commands->at(user_in)();
+        }
+    }
 }
 } // namespace cli
 
