@@ -7,8 +7,8 @@ void make_trie_cli(cli::Cli& trie_cli, trie::Trie &t);
 int main()
 {
     trie::Trie t;
-
     cli::Cli trie_cli;
+
     make_trie_cli(trie_cli, t);
     trie_cli.start();
 
@@ -25,7 +25,6 @@ q - έξοδος)";
 
     trie_cli.set_menu_message(menu);
 
-    trie_cli.add_command("0", [&]() { greet(menu); });
     trie_cli.add_command("1", [&]() {
         std::string context = "[Αναζήτηση] ";
         std::string str;
