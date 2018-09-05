@@ -15,9 +15,9 @@ void quit()
 Cli::Cli() :
     menu_msg("'q' - έξοδος από το πρόγραμμα."),
     command_not_found_msg("Λάθος είσοδος."),
-    commands(new std::map<std::string, void (*)()>)
+    commands(new std::map<std::string, std::function<void()>>)
 {
-    add_command("q", quit);
+    add_command("q", [](){quit();});
 }
 
 void Cli::set_menu_message(std::string message)
@@ -25,7 +25,7 @@ void Cli::set_menu_message(std::string message)
     menu_msg = message;
 }
 
-void Cli::add_command(std::string name, void (*handler)())
+void Cli::add_command(std::string name, std::function<void()> handler)
 {
     commands->emplace(name, handler);
 }
