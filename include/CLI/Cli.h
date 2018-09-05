@@ -21,6 +21,7 @@ public:
 
   void show_menu();
   void show_error();
+  void show_prompt();
   std::string parse_user_input();
   void start();
 };

@@ -33,12 +33,17 @@ void Cli::add_command(std::string name, std::function<void()> handler)
 void Cli::show_menu()
 {
     std::cout << menu_msg << std::endl;
-    std::cout << "> ";
+    show_prompt();
 }
 
 void Cli::show_error()
 {
     std::cout << command_not_found_msg << std::endl;
+}
+
+void Cli::show_prompt()
+{
+    std::cout << "> ";
 }
 
 std::string Cli::parse_user_input()
