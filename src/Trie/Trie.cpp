@@ -87,6 +87,7 @@ void Trie::remove(std::string s)
         It is used to remove unnecessary nodes after
         a removal. */
     std::stack<Node *> S;
+    std::stack<int> I;
     S.push(n);
 
     /* Traverse the trie to find whether the word exists. */
@@ -100,6 +101,8 @@ void Trie::remove(std::string s)
         else
         {
             S.push(n->children[index]);
+            I.push(index);
+            n = n->children[index];
         }
     }
 
@@ -111,12 +114,17 @@ void Trie::remove(std::string s)
 
         while (!S.empty() && S.top()->total_children == 0 && !S.top()->eow)
         {
-            delete S.top();
+            if (S.top() != root)
+            {
+                delete S.top();
+            }
             S.pop();
 
-            if (S.top()->total_children > 0)
+            if (!S.empty())
             {
                 S.top()->total_children--;
+                S.top()->children[I.top()] = nullptr;
+                I.pop();
             }
         }
     }
