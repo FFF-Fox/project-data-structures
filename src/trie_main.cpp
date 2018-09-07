@@ -4,12 +4,15 @@
 #include "Cli.h"
 #include "Trie.h"
 
-#include <vector> /* testing */
+/* testing */
+#include <vector>
+#include <algorithm>
 
 void read_words(std::string filename, trie::Trie &t);
 void make_trie_cli(cli::Cli &trie_cli, trie::Trie &t);
 
-void test_trie(std::string filename); /* testing */
+/* testing */
+void test_trie(std::string filename);
 
 int main(int argc, char *argv[])
 {
@@ -20,8 +23,21 @@ int main(int argc, char *argv[])
 
         return 1;
     }
-
     std::string filename = argv[1];
+
+    /**
+     *  testing
+     *  /!\ Contains O(n^2) operation (n: total words).
+     * 
+     *  test_trie(filename);
+     */
+
+    /**
+     * main program
+     * Initializes the trie and starts the cli.
+     * 1. Reads the words from the txt file and inserts them in the trie.
+     * 2. Starts the cli. The user can search, insert, remove words.
+     */
     trie::Trie t;
 
     read_words(filename, t);
@@ -114,6 +130,31 @@ void test_trie(std::string filename)
         t.insert(line);
     }
 
+    /**
+     * Sort and filter unique words.
+     */
+    std::sort(words.begin(), words.end());
+    std::vector<std::string> unq_words;
+    std::string w;
+    for (int i = 0; i < words.size(); i++)
+    {
+        if (i == 0)
+        {
+            w = words[i];
+            unq_words.push_back(w);
+        }
+        else
+        {
+            if (words[i] != w)
+            {
+                w = words[i];
+                unq_words.push_back(w);
+            }
+        }
+    }
+    words = unq_words;
+
+    /* Test insertions */
     for (int i = 0; i < words.size(); i++)
     {
         if (!t.find(words[i]))
@@ -124,13 +165,24 @@ void test_trie(std::string filename)
     }
     std::cout << "All words found!" << std::endl;
 
+    /* Test removals */
     for (int i = 0; i < words.size(); i++)
     {
+        /* Test that removed word doesn't exist anymore. */
         t.remove(words[i]);
         if (t.find(words[i]))
         {
             std::cout << words[i] << " wasn't removed successfully!" << std::endl;
             return;
+        }
+        /* Test that no other existing word got removed. */
+        for (int j = i + 1; j < words.size(); j++)
+        {
+            if (!t.find(words[j]))
+            {
+                std::cout << words[j] << " not found, after deleting " << words[i] << "!" << std::endl;
+                return;
+            }
         }
     }
     std::cout << "All words removed successfully!" << std::endl;
