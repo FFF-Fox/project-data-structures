@@ -2,6 +2,10 @@
 
 namespace alg
 {
+/**
+ * mergesort
+ * Sort a vector (Arr) of length L.
+ */
 std::vector<int> *mergesort(std::vector<int> *Arr, int L)
 {
     /* Return the single element. */

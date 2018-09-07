@@ -3,6 +3,11 @@
 #include <vector>
 #include "alg.h"
 
+/**
+ * read_integers
+ * Reads the integers from the filename into the Arr vector.
+ * L is the length of the vector.
+ */
 void read_integers(std::string filename, std::vector<int>& Arr, int& L);
 
 /* Testing */
@@ -30,11 +35,6 @@ int main(int argc, char *argv[])
     read_integers(filename, Arr, L);
 
     Arr = *alg::mergesort(&Arr, L);
-
-    for (int i = 0; i < L; i++)
-    {
-        std::cout << Arr[i] << std::endl;
-    }
 
     return 0;
 }
