@@ -14,6 +14,7 @@ void read_integers(std::string filename, std::vector<int> &Arr, int &L);
 void test_mergesort();
 void test_linear_search();
 void test_binary_search();
+void test_interpolation_search();
 
 int main(int argc, char *argv[])
 {
@@ -35,7 +36,8 @@ int main(int argc, char *argv[])
     /* Testing */
     // test_mergesort();
     // test_linear_search();
-    test_binary_search();
+    // test_binary_search();
+    test_interpolation_search();
 
     return 0;
 }
@@ -145,4 +147,37 @@ void test_binary_search()
     }
 
     std::cout << "Binary search passed the test." << std::endl;
+}
+
+void test_interpolation_search()
+{
+    int L = 10;
+    std::vector<int> Arr;
+
+    for (int i = 0; i < L; i++)
+    {
+        Arr.push_back(i);
+    }
+
+    for (int i = -20; i < L + 20; i++)
+    {
+        if (i < 0 || i >= L)
+        {
+            if (alg::interpolation_search(i, Arr, L) != -1)
+            {
+                std::cout << "Interpolation search fails for " << i << std::endl;
+                return;
+            }
+        }
+        else
+        {
+            if (alg::interpolation_search(Arr[i], Arr, L) != i)
+            {
+                std::cout << "Interpolation search fails for " << i << std::endl;
+                return;
+            }
+        }
+    }
+
+    std::cout << "Interpolation search passed the test." << std::endl;
 }

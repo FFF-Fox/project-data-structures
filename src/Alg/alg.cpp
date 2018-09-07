@@ -73,6 +73,10 @@ std::vector<int> *mergesort(std::vector<int> *Arr, int L)
     return out;
 }
 
+/**
+ * linear_search
+ * Search each element of the vector from start to finish for x.
+ */
 int linear_search(const int &x, const std::vector<int> &Arr, const int &L)
 {
     for (int i = 0; i < L; i++)
@@ -86,6 +90,10 @@ int linear_search(const int &x, const std::vector<int> &Arr, const int &L)
     return -1;
 }
 
+/**
+ * binary_search
+ * Search a sorted vector for x with binary search.
+ */
 int binary_search(const int &x, const std::vector<int> &Arr, const int &L)
 {
     int l = 0;
@@ -108,6 +116,37 @@ int binary_search(const int &x, const std::vector<int> &Arr, const int &L)
         }
 
         m = l + (r + 1 - l) / 2;
+    }
+
+    return -1;
+}
+
+/**
+ * interpolation_search
+ * Search a sorted vector for x with interpolation search.
+ */
+int interpolation_search(const int &x, const std::vector<int> &Arr, const int &L)
+{
+    int l = 0;
+    int r = L - 1;
+    int pos;
+
+    while (l <= r && x >= Arr[l] && x <= Arr[r])
+    {
+        pos = l + ((r - l) / Arr[r] - Arr[l]) * (x - Arr[l]);
+
+        if (x == Arr[pos])
+        {
+            return pos;
+        }
+        else if (x < Arr[pos])
+        {
+            r = pos - 1;
+        }
+        else if (x > Arr[pos])
+        {
+            l = pos + 1;
+        }
     }
 
     return -1;
