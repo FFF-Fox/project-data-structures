@@ -6,71 +6,73 @@ namespace alg
  * mergesort
  * Sort a vector (Arr) of length L.
  */
-std::vector<int> *mergesort(std::vector<int> *Arr, int L)
+void mergesort(std::vector<int> &Arr, int L)
 {
     /* Return the single element. */
     if (L == 1)
     {
-        return Arr;
+        return;
     }
     int m = L / 2; /* int division. */
 
     /* Create two vectors.
         A1 contains elements of Arr [0 m).
         A2 contains elements of Arr [m L). */
-    std::vector<int> *A1 = new std::vector<int>;
+    std::vector<int> A1;
     for (int i = 0; i < m; i++)
     {
-        A1->push_back((*Arr)[i]);
+        A1.push_back(Arr[i]);
     }
-    std::vector<int> *A2 = new std::vector<int>;
+    std::vector<int> A2;
     for (int i = m; i < L; i++)
     {
-        A2->push_back((*Arr)[i]);
+        A2.push_back(Arr[i]);
     }
 
     /* Sort the two vectors. */
     int L1 = m;
-    A1 = mergesort(A1, L1);
+    mergesort(A1, L1);
     int L2 = L - m;
-    A2 = mergesort(A2, L2);
+    mergesort(A2, L2);
 
     /* Merge the two vectors, creating a sorted one. */
-    std::vector<int> *out = new std::vector<int>;
+    // std::vector<int> *out = new std::vector<int>;
     int i = 0;
     int j = 0;
+    int k = 0;
     while (i < L1 && j < L2)
     {
-        if ((*A1)[i] < (*A2)[j])
+        if (A1[i] < A2[j])
         {
-            out->push_back((*A1)[i]);
+            Arr[k] = A1[i];
             i++;
         }
         else
         {
-            out->push_back((*A2)[j]);
+            Arr[k] = A2[j];
             j++;
         }
+        k++;
 
         if (i == L1)
         {
             while (j != L2)
             {
-                out->push_back((*A2)[j]);
+                Arr[k] = A2[j];
                 j++;
+                k++;
             }
         }
         else if (j == L2)
         {
             while (i != L1)
             {
-                out->push_back((*A1)[i]);
+                Arr[k] = A1[i];
                 i++;
+                k++;
             }
         }
     }
-
-    return out;
 }
 
 /**

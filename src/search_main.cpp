@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
     int L;
     read_integers(filename, Arr, L);
 
-    Arr = *alg::mergesort(&Arr, L);
+    alg::mergesort(Arr, L);
 
     /* Testing */
     run_tests();
@@ -74,7 +74,7 @@ void test_mergesort()
         Arr.push_back(i);
     }
 
-    Arr = *alg::mergesort(&Arr, L);
+    alg::mergesort(Arr, L);
 
     for (int i = 1; i < L; i++)
     {
