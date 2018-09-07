@@ -72,4 +72,17 @@ std::vector<int> *mergesort(std::vector<int> *Arr, int L)
 
     return out;
 }
+
+int linear_search(const int& x, const std::vector<int>& Arr, const int& L)
+{
+    for (int i = 0; i < L; i++)
+    {
+        if (Arr[i] == x)
+        {
+            return i;
+        }
+    }
+
+    return -1;
+}
 } // namespace alg

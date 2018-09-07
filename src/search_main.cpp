@@ -8,10 +8,11 @@
  * Reads the integers from the filename into the Arr vector.
  * L is the length of the vector.
  */
-void read_integers(std::string filename, std::vector<int>& Arr, int& L);
+void read_integers(std::string filename, std::vector<int> &Arr, int &L);
 
 /* Testing */
-void test_mergesort(std::string filename);
+void test_mergesort();
+void test_linear_search();
 
 int main(int argc, char *argv[])
 {
@@ -24,22 +25,20 @@ int main(int argc, char *argv[])
     }
     std::string filename = argv[1];
 
-    /**
-     * Testing
-     * 
-     * test_mergesort(filename);
-     */
-
     std::vector<int> Arr;
     int L;
     read_integers(filename, Arr, L);
 
     Arr = *alg::mergesort(&Arr, L);
 
+    /* Testing */
+    // test_mergesort();
+    // test_linear_search();
+
     return 0;
 }
 
-void read_integers(std::string filename, std::vector<int>& Arr, int& L)
+void read_integers(std::string filename, std::vector<int> &Arr, int &L)
 {
     /* open file */
     std::ifstream infile(filename);
@@ -55,28 +54,21 @@ void read_integers(std::string filename, std::vector<int>& Arr, int& L)
     }
 }
 
-void test_mergesort(std::string filename)
+void test_mergesort()
 {
-    std::vector<int> *integers = new std::vector<int>;
+    std::vector<int> Arr;
+    int L = 10;
 
-    /* open file */
-    std::ifstream infile(filename);
-
-    std::string line;
-    int number;
-    int L = 0;
-    while (std::getline(infile, line))
+    for (int i = L; i >= 0; i--)
     {
-        number = std::stoi(line);
-        integers->push_back(number);
-        L++;
+        Arr.push_back(i);
     }
 
-    integers = alg::mergesort(integers, L);
+    Arr = *alg::mergesort(&Arr, L);
 
     for (int i = 1; i < L; i++)
     {
-        if ((*integers)[i - 1] > (*integers)[i])
+        if (Arr[i - 1] > Arr[i])
         {
             std::cout << "integers[i - 1] "
                       << " > "
@@ -85,4 +77,37 @@ void test_mergesort(std::string filename)
         }
     }
     std::cout << "Mergesort sorts correctly." << std::endl;
+}
+
+void test_linear_search()
+{
+    int L = 10;
+    std::vector<int> Arr;
+
+    for (int i = 0; i < L; i++)
+    {
+        Arr.push_back(i);
+    }
+
+    for (int i = -1; i < L; i++)
+    {
+        if (i < 0 || i >= L)
+        {
+            if (alg::linear_search(-1, Arr, L) != -1)
+            {
+                std::cout << "Linear search fails for " << i << std::endl;
+                return;
+            }
+        }
+        else
+        {
+            if (alg::linear_search(Arr[i], Arr, L) != i)
+            {
+                std::cout << "Linear search fails for " << i << std::endl;
+                return;
+            }
+        }
+    }
+
+    std::cout << "Linear search passed the test." << std::endl;
 }

@@ -6,7 +6,7 @@ namespace alg
 {
 std::vector<int>* mergesort(std::vector<int>* Arr, int L);
 
-int linear_search(std::vector<int> Arr);
-int binary_search(std::vector<int> Arr);
-int interpolation_search(std::vector<int> Arr);
+int linear_search(const int& x, const std::vector<int>& Arr, const int& L);
+int binary_search(const int& x, const std::vector<int>& Arr, const int& L);
+int interpolation_search(const int& x, const std::vector<int>& Arr, const int& L);
 }
