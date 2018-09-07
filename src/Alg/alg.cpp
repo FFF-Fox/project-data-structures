@@ -98,10 +98,12 @@ int binary_search(const int &x, const std::vector<int> &Arr, const int &L)
 {
     int l = 0;
     int r = L - 1;
-    int m = l + (r + 1 - l) / 2;
+    int m;
 
     while (l <= r)
     {
+        m = l + (r + 1 - l) / 2;
+
         if (x == Arr[m])
         {
             return m;
@@ -114,8 +116,6 @@ int binary_search(const int &x, const std::vector<int> &Arr, const int &L)
         {
             l = m + 1;
         }
-
-        m = l + (r + 1 - l) / 2;
     }
 
     return -1;

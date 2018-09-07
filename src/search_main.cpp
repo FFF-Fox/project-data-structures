@@ -11,6 +11,7 @@
 void read_integers(std::string filename, std::vector<int> &Arr, int &L);
 
 /* Testing */
+void run_tests();
 void test_mergesort();
 void test_linear_search();
 void test_binary_search();
@@ -34,10 +35,7 @@ int main(int argc, char *argv[])
     Arr = *alg::mergesort(&Arr, L);
 
     /* Testing */
-    // test_mergesort();
-    // test_linear_search();
-    // test_binary_search();
-    test_interpolation_search();
+    run_tests();
 
     return 0;
 }
@@ -56,6 +54,14 @@ void read_integers(std::string filename, std::vector<int> &Arr, int &L)
         Arr.push_back(number);
         L++;
     }
+}
+
+void run_tests()
+{
+    test_mergesort();
+    test_linear_search();
+    test_binary_search();
+    test_interpolation_search();
 }
 
 void test_mergesort()
