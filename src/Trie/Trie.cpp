@@ -16,6 +16,23 @@ Node::Node() : eow(false), total_children(0)
 }
 
 /**
+ * index
+ * Given a latin character in lower/upper case,
+ * return the appropriate index of the Node.children array.
+ */
+int Trie::index(char c)
+{
+    int i = c;
+    if (i >= 97)
+    {
+        i -= 6;
+    }
+    i -= 'A';
+
+    return i;
+}
+
+/**
  * Trie constructor.
  */
 Trie::Trie() : root(new Node){};
@@ -32,13 +49,13 @@ void Trie::insert(std::string s)
         already exist. */
     for (int i = 0; i < s.length(); i++)
     {
-        int index = s[i] - 'a';
-        if (!n->children[index])
+        int ch_i = index(s[i]);
+        if (!n->children[ch_i])
         {
-            n->children[index] = new Node;
+            n->children[ch_i] = new Node;
             n->total_children++;
         }
-        n = n->children[index];
+        n = n->children[ch_i];
     }
 
     /* Mark the final node as end of word if it isn't already. */
@@ -61,14 +78,14 @@ bool Trie::find(std::string s)
         is not contained in the trie. */
     for (int i = 0; i < s.length(); i++)
     {
-        int index = s[i] - 'a';
-        if (!n->children[index])
+        int ch_i = index(s[i]);
+        if (!n->children[ch_i])
         {
             return false;
         }
         else
         {
-            n = n->children[index];
+            n = n->children[ch_i];
         }
     }
 
@@ -93,16 +110,16 @@ void Trie::remove(std::string s)
     /* Traverse the trie to find whether the word exists. */
     for (int i = 0; i < s.length(); i++)
     {
-        int index = s[i] - 'a';
-        if (!n->children[index])
+        int ch_i = index(s[i]);
+        if (!n->children[ch_i])
         {
             return;
         }
         else
         {
-            S.push(n->children[index]);
-            I.push(index);
-            n = n->children[index];
+            S.push(n->children[ch_i]);
+            I.push(ch_i);
+            n = n->children[ch_i];
         }
     }
 

@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-#define AB_size 26
+#define AB_size 52
 
 namespace trie
 {
@@ -18,6 +18,8 @@ class Trie
 {
   private:
     Node *root;
+
+    int index(char c);
 
   public:
     Trie();
