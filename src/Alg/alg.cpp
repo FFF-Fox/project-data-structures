@@ -1,4 +1,6 @@
 #include "alg.h"
+#include <iostream>
+#include <chrono>
 
 namespace alg
 {
@@ -6,13 +8,12 @@ namespace alg
  * mergesort
  * Sort a vector (Arr) of length L.
  */
-void mergesort(std::vector<int> &Arr, int L)
+void mergesort(std::vector<int> &Arr, int &L)
 {
     /* Return the single element. */
     if (L == 1)
-    {
         return;
-    }
+
     int m = L / 2; /* int division. */
 
     /* Create two vectors.
@@ -31,12 +32,11 @@ void mergesort(std::vector<int> &Arr, int L)
 
     /* Sort the two vectors. */
     int L1 = m;
-    mergesort(A1, L1);
     int L2 = L - m;
+    mergesort(A1, L1);
     mergesort(A2, L2);
 
     /* Merge the two vectors, creating a sorted one. */
-    // std::vector<int> *out = new std::vector<int>;
     int i = 0;
     int j = 0;
     int k = 0;
@@ -137,6 +137,9 @@ int interpolation_search(const int &x, const std::vector<int> &Arr, const int &L
     {
         pos = l + ((r - l) / Arr[r] - Arr[l]) * (x - Arr[l]);
 
+        if (0 > pos || pos >= L)
+            break;
+
         if (x == Arr[pos])
         {
             return pos;
@@ -153,4 +156,20 @@ int interpolation_search(const int &x, const std::vector<int> &Arr, const int &L
 
     return -1;
 }
+
+/**
+ * benchmark
+ * Prints the time spent evaluating the function parameter f.
+ */
+void benchmark(std::function<void()> func)
+{
+    std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
+    func();
+    std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
+
+    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
+
+    std::cout << duration << " ms." << std::endl;
+}
+
 } // namespace alg

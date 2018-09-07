@@ -17,6 +17,9 @@ void test_linear_search();
 void test_binary_search();
 void test_interpolation_search();
 
+/* Benchmarking */
+void run_benchmarks(std::vector<int> &Arr, const int &L);
+
 int main(int argc, char *argv[])
 {
     if (argc != 2)
@@ -36,6 +39,9 @@ int main(int argc, char *argv[])
 
     /* Testing */
     run_tests();
+
+    /* Benchmarking */
+    run_benchmarks(Arr, L);
 
     return 0;
 }
@@ -58,6 +64,9 @@ void read_integers(std::string filename, std::vector<int> &Arr, int &L)
 
 void run_tests()
 {
+    std::cout << "**" << std::endl
+              << "* Running Tests" << std::endl
+              << "**" << std::endl;
     test_mergesort();
     test_linear_search();
     test_binary_search();
@@ -80,9 +89,9 @@ void test_mergesort()
     {
         if (Arr[i - 1] > Arr[i])
         {
-            std::cout << "integers[i - 1] "
+            std::cout << Arr[i - 1]
                       << " > "
-                      << "integers[i]." << std::endl;
+                      << Arr[i] << std::endl;
             return;
         }
     }
@@ -186,4 +195,44 @@ void test_interpolation_search()
     }
 
     std::cout << "Interpolation search passed the test." << std::endl;
+}
+
+void run_benchmarks(std::vector<int> &Arr, const int &L)
+{
+    const int total_searches = L + 2000;
+    const int min = Arr[0] - 1000;
+    const int max = Arr[L - 1] + 1000;
+    const int step = (max - min) / total_searches;
+
+    std::cout << "**" << std::endl
+              << "* Running Benchmarks" << std::endl
+              << "* Calculating time in ms for " << total_searches << " searches." << std::endl
+              << "**" << std::endl;
+
+    // linear search benchmark.
+    std::cout << "Linear search: ";
+    alg::benchmark([&]() {
+        for (int x = min; x < max; x += step)
+        {
+            alg::linear_search(x, Arr, L);
+        }
+    });
+
+    // binary search benchmark.
+    std::cout << "Binary search: ";
+    alg::benchmark([&]() {
+        for (int x = min; x < max; x += step)
+        {
+            alg::binary_search(x, Arr, L);
+        }
+    });
+
+    // interpolation search benchmark.
+    std::cout << "Interpolation search: ";
+    alg::benchmark([&]() {
+        for (int x = min; x < max; x += step)
+        {
+            alg::interpolation_search(x, Arr, L);
+        }
+    });
 }
