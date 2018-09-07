@@ -13,6 +13,7 @@ void read_integers(std::string filename, std::vector<int> &Arr, int &L);
 /* Testing */
 void test_mergesort();
 void test_linear_search();
+void test_binary_search();
 
 int main(int argc, char *argv[])
 {
@@ -34,6 +35,7 @@ int main(int argc, char *argv[])
     /* Testing */
     // test_mergesort();
     // test_linear_search();
+    test_binary_search();
 
     return 0;
 }
@@ -110,4 +112,37 @@ void test_linear_search()
     }
 
     std::cout << "Linear search passed the test." << std::endl;
+}
+
+void test_binary_search()
+{
+    int L = 10;
+    std::vector<int> Arr;
+
+    for (int i = 0; i < L; i++)
+    {
+        Arr.push_back(i);
+    }
+
+    for (int i = -1; i < L + 1; i++)
+    {
+        if (i < 0 || i >= L)
+        {
+            if (alg::binary_search(i, Arr, L) != -1)
+            {
+                std::cout << "Binary search fails for " << i << std::endl;
+                return;
+            }
+        }
+        else
+        {
+            if (alg::binary_search(Arr[i], Arr, L) != i)
+            {
+                std::cout << "Binary search fails for " << i << std::endl;
+                return;
+            }
+        }
+    }
+
+    std::cout << "Binary search passed the test." << std::endl;
 }

@@ -73,7 +73,7 @@ std::vector<int> *mergesort(std::vector<int> *Arr, int L)
     return out;
 }
 
-int linear_search(const int& x, const std::vector<int>& Arr, const int& L)
+int linear_search(const int &x, const std::vector<int> &Arr, const int &L)
 {
     for (int i = 0; i < L; i++)
     {
@@ -81,6 +81,33 @@ int linear_search(const int& x, const std::vector<int>& Arr, const int& L)
         {
             return i;
         }
+    }
+
+    return -1;
+}
+
+int binary_search(const int &x, const std::vector<int> &Arr, const int &L)
+{
+    int l = 0;
+    int r = L - 1;
+    int m = l + (r + 1 - l) / 2;
+
+    while (l <= r)
+    {
+        if (x == Arr[m])
+        {
+            return m;
+        }
+        else if (x < Arr[m])
+        {
+            r = m - 1;
+        }
+        else if (x > Arr[m])
+        {
+            l = m + 1;
+        }
+
+        m = l + (r + 1 - l) / 2;
     }
 
     return -1;
