@@ -5,3 +5,6 @@ CMakeFiles
 *.cmake
 
 .vscode
+build
+*.a
+main
