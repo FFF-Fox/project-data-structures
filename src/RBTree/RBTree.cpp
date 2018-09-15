@@ -187,6 +187,17 @@ void Rbt::insert(int x)
     restore(n);
 }
 
+bool Rbt::search(int x)
+{
+    if (!root)
+    {
+        return false;
+    }
+
+    Node *z = access(x);
+    return (x == z->data);
+}
+
 void Rbt::print_node(int level, Node *z)
 {
     level++;

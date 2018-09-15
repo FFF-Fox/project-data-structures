@@ -51,6 +51,19 @@ int main(int argc, char *argv[])
         t.insert(n);
     }
 
+    for (auto n : Arr)
+    {
+        if (!t.search(n))
+        {
+            std::cout << "Error, " << n << " not found!" << std::endl;
+        }
+    }
+
+    if (t.search(-1))
+    {
+        std::cout << "Error, " << -1 << " found!" << std::endl;
+    }
+
     return 0;
 }
 
