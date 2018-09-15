@@ -23,26 +23,35 @@ void run_benchmarks(std::vector<int> &Arr, const int &L);
 
 int main(int argc, char *argv[])
 {
-    if (argc != 2)
-    {
-        std::cerr << "Παρακαλώ εισάγετε το path του αρχείου με τις λέξεις για εισαγωγή στο trie..." << std::endl;
-        std::cerr << "Χρήση: " << argv[0] << " FILENAME" << std::endl;
+    // if (argc != 2)
+    // {
+    //     std::cerr << "Παρακαλώ εισάγετε το path του αρχείου με τις λέξεις για εισαγωγή στο trie..." << std::endl;
+    //     std::cerr << "Χρήση: " << argv[0] << " FILENAME" << std::endl;
 
-        return 1;
-    }
-    std::string filename = argv[1];
+    //     return 1;
+    // }
+    // std::string filename = argv[1];
 
-    std::vector<int> Arr;
-    int L;
-    read_integers(filename, Arr, L);
+    // std::vector<int> Arr;
+    // int L;
+    // read_integers(filename, Arr, L);
 
-    alg::mergesort(Arr, L);
+    // alg::mergesort(Arr, L);
 
-    /* Testing */
-    run_tests();
+    // /* Testing */
+    // run_tests();
 
-    /* Benchmarking */
-    run_benchmarks(Arr, L);
+    // /* Benchmarking */
+    // run_benchmarks(Arr, L);
+
+
+    rbt::Node *n = new rbt::Node(2);
+
+    std::cout << n->data << std::endl;
+    std::cout << n->color << std::endl;
+    std::cout << n->parent << std::endl;
+    std::cout << n->left << std::endl;
+    std::cout << n->right << std::endl;
 
     return 0;
 }
