@@ -10,6 +10,15 @@ PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src/alg.cpp
 )
 
+add_library (RBTree src/RBTree/RBTree.cpp)
+target_include_directories (RBTree
+PUBLIC
+    $<INSTALL_INTERFACE:include/RBTree>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/RBTree>
+PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/RBTree.cpp
+)
+
 add_library (CLI src/CLI/Cli.cpp)
 target_include_directories (CLI
 PUBLIC
@@ -26,6 +35,7 @@ add_executable (
 
 target_link_libraries (search_main
     Alg
+    RBTree
     CLI
 )
 

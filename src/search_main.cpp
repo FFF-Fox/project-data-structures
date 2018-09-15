@@ -2,6 +2,7 @@
 #include <fstream>
 #include <vector>
 #include "alg.h"
+#include "RBTree.h"
 
 /**
  * read_integers
