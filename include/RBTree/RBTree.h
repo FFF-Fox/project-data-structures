@@ -29,12 +29,16 @@ class Rbt
 
     void print_node(int level, Node *z); /* Debug */
 
+    int count_blk(Node *z); /* Debug */
+    bool check_red(Node *z, int p_color); /* Debug */
+
   public:
     Rbt();
 
     void insert(int x);
     bool search(int x);
 
+    bool check_rules(); /* Debug */
     void print_tree(); /* Debug */
 };
 } // namespace rbt

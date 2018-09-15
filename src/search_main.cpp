@@ -11,15 +11,22 @@
  */
 void read_integers(std::string filename, std::vector<int> &Arr, int &L);
 
+/**
+ * fill_tree
+ * Insert the elements of the Arr vector to the tree.
+ */
+void fill_tree(rbt::Rbt &t, std::vector<int> &Arr);
+
 /* Testing */
 void run_tests();
 void test_mergesort();
 void test_linear_search();
 void test_binary_search();
 void test_interpolation_search();
+void test_tree();
 
 /* Benchmarking */
-void run_benchmarks(std::vector<int> &Arr, const int &L);
+void run_benchmarks(std::vector<int> &Arr, const int &L, rbt::Rbt &t);
 
 int main(int argc, char *argv[])
 {
@@ -32,37 +39,20 @@ int main(int argc, char *argv[])
     }
     std::string filename = argv[1];
 
+    rbt::Rbt t;
     std::vector<int> Arr;
     int L;
     read_integers(filename, Arr, L);
 
     alg::mergesort(Arr, L);
 
-    // /* Testing */
-    // run_tests();
+    fill_tree(t, Arr);
 
-    // /* Benchmarking */
-    // run_benchmarks(Arr, L);
+    /* Testing */
+    run_tests();
 
-    rbt::Rbt t;
-
-    for (auto n : Arr)
-    {
-        t.insert(n);
-    }
-
-    for (auto n : Arr)
-    {
-        if (!t.search(n))
-        {
-            std::cout << "Error, " << n << " not found!" << std::endl;
-        }
-    }
-
-    if (t.search(-1))
-    {
-        std::cout << "Error, " << -1 << " found!" << std::endl;
-    }
+    /* Benchmarking */
+    run_benchmarks(Arr, L, t);
 
     return 0;
 }
@@ -92,6 +82,15 @@ void run_tests()
     test_linear_search();
     test_binary_search();
     test_interpolation_search();
+    test_tree();
+}
+
+void fill_tree(rbt::Rbt &t, std::vector<int> &Arr)
+{
+    for (auto n : Arr)
+    {
+        t.insert(n);
+    }
 }
 
 void test_mergesort()
@@ -218,7 +217,33 @@ void test_interpolation_search()
     std::cout << "Interpolation search passed the test." << std::endl;
 }
 
-void run_benchmarks(std::vector<int> &Arr, const int &L)
+void test_tree()
+{
+    rbt::Rbt t;
+
+    for (int i = 0; i < 10; i++)
+    {
+        t.insert(i);
+    }
+    if (!t.check_rules())
+    {
+        std::cout << "The red-black tree is not correct." << std::endl;
+        return;
+    }
+
+    for (int i = 0; i < 10; i++)
+    {
+        if (!t.search(i))
+        {
+            std::cout << "Red-black tree search for " << i << " failed." << std::endl;
+            return;
+        }
+    }
+
+    std::cout << "Red-black tree passed the test." << std::endl;
+}
+
+void run_benchmarks(std::vector<int> &Arr, const int &L, rbt::Rbt &t)
 {
     const int total_searches = L + 2000;
     const int min = Arr[0] - 1000;
@@ -254,6 +279,15 @@ void run_benchmarks(std::vector<int> &Arr, const int &L)
         for (int x = min; x < max; x += step)
         {
             alg::interpolation_search(x, Arr, L);
+        }
+    });
+
+    // red-black tree search benchmark.
+    std::cout << "Red-black tree search: ";
+    alg::benchmark([&]() {
+        for (int x = min; x < max; x += step)
+        {
+            t.search(x);
         }
     });
 }
