@@ -1,5 +1,7 @@
 #include "RBTree.h"
 
+#include <iostream>
+
 namespace rbt
 {
 Node::Node(int n) : data(n), color(RED),
@@ -100,6 +102,61 @@ void Rbt::rotate_right(Node *x)
     x->parent = y;
 }
 
+void Rbt::restore(Node *z)
+{
+    while (z->parent && z->parent->color == RED)
+    {
+        if (z->parent->parent)
+        {
+            if (z->parent == z->parent->parent->left)
+            {
+                Node *y = z->parent->parent->right;
+                if (y && y->color == RED)
+                {
+                    z->parent->color = BLACK;
+                    y->color = BLACK;
+                    z->parent->parent->color = RED;
+                    z = z->parent->parent;
+                }
+                else
+                {
+                    if (z == z->parent->right)
+                    {
+                        z = z->parent;
+                        rotate_left(z);
+                    }
+                    z->parent->color = BLACK;
+                    z->parent->parent->color = RED;
+                    rotate_right(z->parent->parent);
+                }
+            }
+            else if (z->parent == z->parent->parent->right)
+            {
+                Node *y = z->parent->parent->left;
+                if (y && y->color == RED)
+                {
+                    z->parent->color = BLACK;
+                    y->color = BLACK;
+                    z->parent->parent->color = RED;
+                    z = z->parent->parent;
+                }
+                else
+                {
+                    if (z == z->parent->left)
+                    {
+                        z = z->parent;
+                        rotate_right(z);
+                    }
+                    z->parent->color = BLACK;
+                    z->parent->parent->color = RED;
+                    rotate_left(z->parent->parent);
+                }
+            }
+        }
+    }
+    root->color = BLACK;
+}
+
 void Rbt::insert(int x)
 {
     if (!root)
@@ -110,23 +167,38 @@ void Rbt::insert(int x)
     }
 
     Node *z = access(x);
+    Node *n = new Node(x);
     if (x == z->data)
     {
         return;
     }
     else if (x < z->data)
     {
-        Node *n = new Node(x);
         n->parent = z;
         z->left = n;
     }
     else if (x > z->data)
     {
-        Node *n = new Node(x);
         n->parent = z;
         z->right = n;
     }
 
     // Balance tree
+    restore(n);
+}
+
+void Rbt::print_node(int level, Node *z)
+{
+    level++;
+    if (z->left)
+        print_node(level, z->left);
+    std::cout << "level: " << level << ", data: " << z->data << ", color: " << z->color << std::endl;
+    if (z->right)
+        print_node(level, z->right);
+}
+
+void Rbt::print_tree()
+{
+    print_node(0, root);
 }
 } // namespace rbt

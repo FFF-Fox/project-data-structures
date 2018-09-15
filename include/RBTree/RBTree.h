@@ -25,11 +25,16 @@ class Rbt
 
     void rotate_left(Node *x);
     void rotate_right(Node *x);
+    void restore(Node *z);
+
+    void print_node(int level, Node *z); /* Debug */
 
   public:
     Rbt();
 
     void insert(int x);
     bool search(int x);
+
+    void print_tree(); /* Debug */
 };
 } // namespace rbt
