@@ -154,15 +154,6 @@ int interpolation_search(const int &x, const std::vector<int> &Arr, const int &L
         }
     }
 
-    if (Arr[l] == x)
-    {
-        return l;
-    }
-    else
-    {
-        return -1;
-    }
-
     return -1;
 }
 
