@@ -1,3 +1,4 @@
+#include <random>
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -49,10 +50,10 @@ int main(int argc, char *argv[])
     fill_tree(t, Arr);
 
     /* Testing */
-    run_tests(Arr, L, t);
+    // run_tests(Arr, L, t);
 
     /* Benchmarking */
-    // run_benchmarks(Arr, L, t);
+    run_benchmarks(Arr, L, t);
 
     return 0;
 }
@@ -205,12 +206,22 @@ void test_tree(rbt::Rbt &t, std::vector<int> &Arr, int &L)
     std::cout << "Red-black tree passed the test." << std::endl;
 }
 
-void run_benchmarks(std::vector<int> &Arr, const int &L, rbt::Rbt &t)
+void run_benchmarks(std::vector<int> &Arr, const int &L, rbt::Rbt &T)
 {
-    const int total_searches = L + 2000;
-    const int min = Arr[0] - 1000;
-    const int max = Arr[L - 1] + 1000;
+    const int total_searches = 100000;
+    const int min = Arr[0];
+    const int max = Arr[L - 1];
     const int step = (max - min) / total_searches;
+
+    std::uniform_int_distribution<> dist(min, max);
+    std::mt19937 gen;
+
+    std::vector<int> rand_ints;
+
+    for (int i = 0; i < total_searches; i++)
+    {
+        rand_ints.push_back(dist(gen));
+    }
 
     std::cout << "**" << std::endl
               << "* Running Benchmarks" << std::endl
@@ -218,38 +229,97 @@ void run_benchmarks(std::vector<int> &Arr, const int &L, rbt::Rbt &t)
               << "**" << std::endl;
 
     // linear search benchmark.
-    std::cout << "Linear search: ";
-    alg::benchmark([&]() {
-        for (int x = min; x < max; x += step)
-        {
+    std::cout << "Linear search:" << std::endl;
+    unsigned long long avg = 0;
+    unsigned long long worst_t = 0;
+    int worst_x = 0;
+    for (int i = 0; i < total_searches; i++)
+    {
+        int x = rand_ints[i];
+        unsigned long long t = alg::benchmark([&]() {
             alg::linear_search(x, Arr, L);
+        });
+        avg = (i * avg + t) / (i + 1);
+        if (t > worst_t)
+        {
+            worst_t = t;
+            worst_x = x;
         }
-    });
+        // std::cout << t << " ps for " << x << std::endl; /* Debug */
+    }
+    std::cout << avg << " ps avg." << std::endl;
+    std::cout << worst_t << " ps worst." << std::endl;
+    std::cout << worst_x << " worst search." << std::endl;
 
     // binary search benchmark.
-    std::cout << "Binary search: ";
-    alg::benchmark([&]() {
-        for (int x = min; x < max; x += step)
-        {
+    std::cout << "Binary search:" << std::endl;
+    avg = 0;
+    worst_t = 0;
+    worst_x = 0;
+    for (int i = 0; i < total_searches; i++)
+    {
+        int x = rand_ints[i];
+        unsigned long long t = alg::benchmark([&]() {
             alg::binary_search(x, Arr, L);
+        });
+        avg = (i * avg + t) / (i + 1);
+        if (t > worst_t)
+        {
+            worst_t = t;
+            worst_x = x;
         }
-    });
+        // std::cout << t << " ps for " << x << std::endl; /* Debug */
+    }
+    std::cout << avg << " ps avg." << std::endl;
+    std::cout << worst_t << " ps worst." << std::endl;
+    std::cout << worst_x << " worst search." << std::endl;
 
     // interpolation search benchmark.
-    std::cout << "Interpolation search: ";
-    alg::benchmark([&]() {
-        for (int x = min; x < max; x += step)
-        {
+    std::cout << "Interpolation search:" << std::endl;
+    avg = 0;
+    worst_t = 0;
+    worst_x = 0;
+
+    for (int i = 0; i < total_searches; i++)
+    {
+        int x = rand_ints[i];
+        unsigned long long t = alg::benchmark([&]() {
             alg::interpolation_search(x, Arr, L);
+        });
+        avg = (i * avg + t) / (i + 1);
+        if (t > worst_t)
+        {
+            worst_t = t;
+            worst_x = x;
         }
-    });
+        // std::cout << t << " ps for " << x << std::endl; /* Debug */
+    }
+    std::cout << avg << " ps avg." << std::endl;
+    std::cout << worst_t << " ps worst." << std::endl;
+    std::cout << worst_x << " worst search." << std::endl;
 
     // red-black tree search benchmark.
-    std::cout << "Red-black tree search: ";
-    alg::benchmark([&]() {
-        for (int x = min; x < max; x += step)
+    std::cout << "Red-black tree search:" << std::endl;
+    ;
+    avg = 0;
+    worst_t = 0;
+    worst_x = 0;
+
+    for (int i = 0; i < total_searches; i++)
+    {
+        int x = rand_ints[i];
+        unsigned long long t = alg::benchmark([&]() {
+            T.search(x);
+        });
+        avg = (i * avg + t) / (i + 1);
+        if (t > worst_t)
         {
-            t.search(x);
+            worst_t = t;
+            worst_x = x;
         }
-    });
+        // std::cout << t << " ps for " << x << std::endl; /* Debug */
+    }
+    std::cout << avg << " ps avg." << std::endl;
+    std::cout << worst_t << " ps worst." << std::endl;
+    std::cout << worst_x << " worst search." << std::endl;
 }

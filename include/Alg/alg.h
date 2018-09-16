@@ -10,5 +10,5 @@ int linear_search(const int &x, const std::vector<int> &Arr, const int &L);
 int binary_search(const int &x, const std::vector<int> &Arr, const int &L);
 int interpolation_search(const int &x, const std::vector<int> &Arr, const int &L);
 
-void benchmark(std::function<void()> func);
+unsigned long long benchmark(std::function<void()> func);
 } // namespace alg
