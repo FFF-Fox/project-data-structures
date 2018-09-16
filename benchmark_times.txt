@@ -1,0 +1,20 @@
+**
+* Running Benchmarks
+* Calculating time in ps for 1000000 searches.
+**
+Linear search:
+480297775 ps avg.
+1600657000 ps worst.
+86560 worst search.
+Binary search:
+361191 ps avg.
+36966000 ps worst.
+136488 worst search.
+Interpolation search:
+1620874559 ps avg.
+7247036000 ps worst.
+358548 worst search.
+Red-black tree search:
+303673 ps avg.
+23965000 ps worst.
+202548 worst search.

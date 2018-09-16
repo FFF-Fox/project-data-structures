@@ -208,7 +208,7 @@ void test_tree(rbt::Rbt &t, std::vector<int> &Arr, int &L)
 
 void run_benchmarks(std::vector<int> &Arr, const int &L, rbt::Rbt &T)
 {
-    const int total_searches = 100000;
+    const int total_searches = 1000000;
     const int min = Arr[0];
     const int max = Arr[L - 1];
     const int step = (max - min) / total_searches;
@@ -225,7 +225,7 @@ void run_benchmarks(std::vector<int> &Arr, const int &L, rbt::Rbt &T)
 
     std::cout << "**" << std::endl
               << "* Running Benchmarks" << std::endl
-              << "* Calculating time in ms for " << total_searches << " searches." << std::endl
+              << "* Calculating time in ps for " << total_searches << " searches." << std::endl
               << "**" << std::endl;
 
     // linear search benchmark.
