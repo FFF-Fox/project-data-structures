@@ -2,6 +2,7 @@
 #include <fstream>
 #include <vector>
 #include "alg.h"
+#include "Cli.h"
 #include "RBTree.h"
 
 /**
@@ -10,6 +11,12 @@
  * L is the length of the vector.
  */
 void read_integers(std::string filename, std::vector<int> &Arr, int &L);
+
+/**
+ * make_search_cli
+ * Creates the user cli for integer searching.
+ */
+void make_search_cli(cli::Cli &search_cli, std::vector<int> &Arr, int &L);
 
 /**
  * fill_tree
@@ -39,20 +46,24 @@ int main(int argc, char *argv[])
     }
     std::string filename = argv[1];
 
-    rbt::Rbt t;
     std::vector<int> Arr;
     int L;
     read_integers(filename, Arr, L);
 
     alg::mergesort(Arr, L);
 
-    fill_tree(t, Arr);
+    cli::Cli search_cli;
+    make_search_cli(search_cli, Arr, L);
+    search_cli.start();
 
-    /* Testing */
-    run_tests();
+    // rbt::Rbt t;
+    // fill_tree(t, Arr);
 
-    /* Benchmarking */
-    run_benchmarks(Arr, L, t);
+    // /* Testing */
+    // run_tests();
+
+    // /* Benchmarking */
+    // run_benchmarks(Arr, L, t);
 
     return 0;
 }
@@ -71,6 +82,75 @@ void read_integers(std::string filename, std::vector<int> &Arr, int &L)
         Arr.push_back(number);
         L++;
     }
+}
+
+void make_search_cli(cli::Cli &search_cli, std::vector<int> &Arr, int &L)
+{
+    std::string menu =
+        R"(1 - Linear search
+2 - Binary search
+3 - Interpolation search
+q - έξοδος)";
+
+    search_cli.set_menu_message(menu);
+
+    search_cli.add_command("1", [&]() {
+        std::string context = "[Linear search] ";
+        std::string str;
+
+        std::cout << context << "Πληκτρολογήστε τον αριθμό για αναζήτηση." << std::endl;
+        search_cli.show_prompt();
+        std::cin >> str;
+
+        int x = std::stoi(str);
+        int i = alg::linear_search(x, Arr, L);
+        if (i >= 0)
+        {
+            std::cout << context << "Ο αριθμός βρέθηκε στη θέση: " << i << "." << std::endl;
+        }
+        else
+        {
+            std::cout << context << "Ο αριθμός δεν βρέθηκε." << std::endl;
+        }
+    });
+    search_cli.add_command("2", [&]() {
+        std::string context = "[Binary search] ";
+        std::string str;
+
+        std::cout << context << "Πληκτρολογήστε τον αριθμό για αναζήτηση." << std::endl;
+        search_cli.show_prompt();
+        std::cin >> str;
+
+        int x = std::stoi(str);
+        int i = alg::binary_search(x, Arr, L);
+        if (i >= 0)
+        {
+            std::cout << context << "Ο αριθμός βρέθηκε στη θέση: " << i << "." << std::endl;
+        }
+        else
+        {
+            std::cout << context << "Ο αριθμός δεν βρέθηκε." << std::endl;
+        }
+    });
+    search_cli.add_command("3", [&]() {
+        std::string context = "[Interpolation search] ";
+        std::string str;
+
+        std::cout << context << "Πληκτρολογήστε τον αριθμό για αναζήτηση." << std::endl;
+        search_cli.show_prompt();
+        std::cin >> str;
+
+        int x = std::stoi(str);
+        int i = alg::interpolation_search(x, Arr, L);
+        if (i >= 0)
+        {
+            std::cout << context << "Ο αριθμός βρέθηκε στη θέση: " << i << "." << std::endl;
+        }
+        else
+        {
+            std::cout << context << "Ο αριθμός δεν βρέθηκε." << std::endl;
+        }
+    });
 }
 
 void run_tests()
