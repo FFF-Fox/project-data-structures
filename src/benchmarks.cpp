@@ -2,7 +2,6 @@
 #include <fstream>
 #include <vector>
 #include "alg.h"
-#include "Cli.h"
 #include "RBTree.h"
 
 /**
@@ -19,12 +18,12 @@ void read_integers(std::string filename, std::vector<int> &Arr, int &L);
 void fill_tree(rbt::Rbt &t, std::vector<int> &Arr);
 
 /* Testing */
-void run_tests();
-void test_mergesort();
-void test_linear_search();
-void test_binary_search();
-void test_interpolation_search();
-void test_tree();
+void run_tests(std::vector<int> &Arr, int &L, rbt::Rbt &t);
+void test_mergesort(std::vector<int> &Arr, int &L);
+void test_linear_search(std::vector<int> &Arr, int &L);
+void test_binary_search(std::vector<int> &Arr, int &L);
+void test_interpolation_search(std::vector<int> &Arr, int &L);
+void test_tree(rbt::Rbt &t, std::vector<int> &Arr, int &L);
 
 /* Benchmarking */
 void run_benchmarks(std::vector<int> &Arr, const int &L, rbt::Rbt &t);
@@ -50,10 +49,10 @@ int main(int argc, char *argv[])
     fill_tree(t, Arr);
 
     /* Testing */
-    run_tests();
+    run_tests(Arr, L, t);
 
     /* Benchmarking */
-    run_benchmarks(Arr, L, t);
+    // run_benchmarks(Arr, L, t);
 
     return 0;
 }
@@ -82,28 +81,20 @@ void fill_tree(rbt::Rbt &t, std::vector<int> &Arr)
     }
 }
 
-void run_tests()
+void run_tests(std::vector<int> &Arr, int &L, rbt::Rbt &t)
 {
     std::cout << "**" << std::endl
               << "* Running Tests" << std::endl
               << "**" << std::endl;
-    test_mergesort();
-    test_linear_search();
-    test_binary_search();
-    test_interpolation_search();
-    test_tree();
+    test_mergesort(Arr, L);
+    // test_linear_search(Arr, L);
+    test_binary_search(Arr, L);
+    test_interpolation_search(Arr, L);
+    test_tree(t, Arr, L);
 }
 
-void test_mergesort()
+void test_mergesort(std::vector<int> &Arr, int &L)
 {
-    std::vector<int> Arr;
-    int L = 10;
-
-    for (int i = L; i >= 0; i--)
-    {
-        Arr.push_back(i);
-    }
-
     alg::mergesort(Arr, L);
 
     for (int i = 1; i < L; i++)
@@ -119,19 +110,11 @@ void test_mergesort()
     std::cout << "Mergesort sorts correctly." << std::endl;
 }
 
-void test_linear_search()
+void test_linear_search(std::vector<int> &Arr, int &L)
 {
-    int L = 10;
-    std::vector<int> Arr;
-
-    for (int i = 0; i < L; i++)
-    {
-        Arr.push_back(i);
-    }
-
     for (int i = -1; i < L; i++)
     {
-        if (i < 0 || i >= L)
+        if (i < 0)
         {
             if (alg::linear_search(-1, Arr, L) != -1)
             {
@@ -141,7 +124,7 @@ void test_linear_search()
         }
         else
         {
-            if (alg::linear_search(Arr[i], Arr, L) != i)
+            if (alg::linear_search(Arr[i], Arr, L) < 0)
             {
                 std::cout << "Linear search fails for " << i << std::endl;
                 return;
@@ -152,21 +135,13 @@ void test_linear_search()
     std::cout << "Linear search passed the test." << std::endl;
 }
 
-void test_binary_search()
+void test_binary_search(std::vector<int> &Arr, int &L)
 {
-    int L = 10;
-    std::vector<int> Arr;
-
-    for (int i = 0; i < L; i++)
+    for (int i = -1; i < L; i++)
     {
-        Arr.push_back(i);
-    }
-
-    for (int i = -1; i < L + 1; i++)
-    {
-        if (i < 0 || i >= L)
+        if (i < 0)
         {
-            if (alg::binary_search(i, Arr, L) != -1)
+            if (alg::binary_search(-1, Arr, L) != -1)
             {
                 std::cout << "Binary search fails for " << i << std::endl;
                 return;
@@ -174,7 +149,7 @@ void test_binary_search()
         }
         else
         {
-            if (alg::binary_search(Arr[i], Arr, L) != i)
+            if (alg::binary_search(Arr[i], Arr, L) < 0)
             {
                 std::cout << "Binary search fails for " << i << std::endl;
                 return;
@@ -185,21 +160,13 @@ void test_binary_search()
     std::cout << "Binary search passed the test." << std::endl;
 }
 
-void test_interpolation_search()
+void test_interpolation_search(std::vector<int> &Arr, int &L)
 {
-    int L = 10;
-    std::vector<int> Arr;
-
-    for (int i = 0; i < L; i++)
+    for (int i = -1; i < L; i++)
     {
-        Arr.push_back(i);
-    }
-
-    for (int i = -20; i < L + 20; i++)
-    {
-        if (i < 0 || i >= L)
+        if (i < 0)
         {
-            if (alg::interpolation_search(i, Arr, L) != -1)
+            if (alg::interpolation_search(-1, Arr, L) != -1)
             {
                 std::cout << "Interpolation search fails for " << i << std::endl;
                 return;
@@ -207,7 +174,7 @@ void test_interpolation_search()
         }
         else
         {
-            if (alg::interpolation_search(Arr[i], Arr, L) != i)
+            if (alg::interpolation_search(Arr[i], Arr, L) < 0)
             {
                 std::cout << "Interpolation search fails for " << i << std::endl;
                 return;
@@ -218,23 +185,17 @@ void test_interpolation_search()
     std::cout << "Interpolation search passed the test." << std::endl;
 }
 
-void test_tree()
+void test_tree(rbt::Rbt &t, std::vector<int> &Arr, int &L)
 {
-    rbt::Rbt t;
-
-    for (int i = 0; i < 10; i++)
-    {
-        t.insert(i);
-    }
     if (!t.check_rules())
     {
         std::cout << "The red-black tree is not correct." << std::endl;
         return;
     }
 
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < L; i++)
     {
-        if (!t.search(i))
+        if (!t.search(Arr[i]))
         {
             std::cout << "Red-black tree search for " << i << " failed." << std::endl;
             return;

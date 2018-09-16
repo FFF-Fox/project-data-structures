@@ -133,9 +133,24 @@ int interpolation_search(const int &x, const std::vector<int> &Arr, const int &L
     int r = L - 1;
     int pos;
 
-    while (Arr[l] <= x && x <= Arr[r])
+    while (l <= r && Arr[l] <= x && x <= Arr[r])
     {
-        pos = l + ((double) (r - l) / (Arr[r] - Arr[l])) * (x - Arr[l]);
+        int dA = Arr[r] - Arr[l];
+        if (dA != 0)
+        {
+            pos = l + ((r - l) / (dA)) * (x - Arr[l]);
+        }
+        else
+        {
+            if (x != Arr[l])
+            {
+                return -1;
+            }
+            else
+            {
+                return l;
+            }
+        }
 
         if (0 > pos || pos >= L)
             break;
