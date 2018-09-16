@@ -35,8 +35,17 @@ add_executable (
 
 target_link_libraries (search_main
     Alg
-    RBTree
     CLI
+)
+
+add_executable (
+    benchmarks
+    src/benchmarks.cpp
+)
+
+target_link_libraries (benchmarks
+    Alg
+    RBTree
 )
 
 add_library (Trie src/Trie/Trie.cpp)

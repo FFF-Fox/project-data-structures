@@ -5,7 +5,6 @@
 #include "Cli.h"
 #include "RBTree.h"
 
-
 /**
  * read_integers
  * Reads the integers from the filename into the Arr vector.
@@ -46,7 +45,7 @@ int main(int argc, char *argv[])
     read_integers(filename, Arr, L);
 
     alg::mergesort(Arr, L);
-    
+
     rbt::Rbt t;
     fill_tree(t, Arr);
 
