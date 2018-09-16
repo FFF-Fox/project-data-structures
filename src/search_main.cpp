@@ -3,7 +3,6 @@
 #include <vector>
 #include "alg.h"
 #include "Cli.h"
-#include "RBTree.h"
 
 /**
  * read_integers
