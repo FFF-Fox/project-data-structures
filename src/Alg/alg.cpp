@@ -133,12 +133,24 @@ int interpolation_search(const int &x, const std::vector<int> &Arr, const int &L
     int r = L - 1;
     int pos;
 
-    while (Arr[l] <= x && x <= Arr[r])
+    while (l <= r && Arr[l] <= x && x <= Arr[r])
     {
-        pos = l + ((double) (r - l) / (Arr[r] - Arr[l])) * (x - Arr[l]);
-
-        if (0 > pos || pos >= L)
-            break;
+        int dA = Arr[r] - Arr[l];
+        if (dA != 0)
+        {
+            pos = l + ((r - l) / dA) * (x - Arr[l]);
+        }
+        else
+        {
+            if (x != Arr[l])
+            {
+                return -1;
+            }
+            else
+            {
+                return l;
+            }
+        }
 
         if (x == Arr[pos])
         {
@@ -161,15 +173,20 @@ int interpolation_search(const int &x, const std::vector<int> &Arr, const int &L
  * benchmark
  * Prints the time spent evaluating the function parameter f.
  */
-void benchmark(std::function<void()> func)
+unsigned long long benchmark(std::function<void()> func)
 {
+    typedef std::ratio<1l, 1000000000000l> pico;
+    typedef std::chrono::duration<long long, pico> picoseconds;
+    typedef std::ratio<1l, 1000000l> micro;
+    typedef std::chrono::duration<long long, micro> microseconds;
+
     std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
     func();
     std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
 
-    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
+    auto duration = std::chrono::duration_cast<picoseconds>(t2 - t1).count();
 
-    std::cout << duration << " ms." << std::endl;
+    return duration;
 }
 
 } // namespace alg

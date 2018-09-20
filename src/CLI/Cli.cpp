@@ -61,8 +61,6 @@ void Cli::start()
         show_menu();
         std::string user_in = parse_user_input();
 
-        // std::cout << "Entered: " << user_in << std::endl;
-
         if (commands->find(user_in) == commands->end())
         {
             show_error();
@@ -74,10 +72,3 @@ void Cli::start()
     }
 }
 } // namespace cli
-
-/**
- * TODO:
- *  show_menu()
- *  parse_user_input()
- *  start()
- */
