@@ -236,7 +236,6 @@ void run_benchmarks(std::vector<int> &Arr, const int &L, rbt::Rbt &T)
     std::cout << "Linear search:" << std::endl;
     unsigned long long avg = 0;
     unsigned long long worst_t = 0;
-    // int worst_x = 0;
     for (int i = 0; i < total_searches; i++)
     {
         int x = rand_ints[i];
@@ -253,18 +252,15 @@ void run_benchmarks(std::vector<int> &Arr, const int &L, rbt::Rbt &T)
         {
             std::cout << "*";
         }
-        // std::cout << t << " ps for " << x << std::endl; /* Debug */
     }
     std::cout << std::endl;
     std::cout << avg << " ps avg." << std::endl;
     std::cout << worst_t << " ps worst." << std::endl;
-    // std::cout << worst_x << " worst search." << std::endl;
 
     // binary search benchmark.
     std::cout << "Binary search:" << std::endl;
     avg = 0;
     worst_t = 0;
-    // worst_x = 0;
     for (int i = 0; i < total_searches; i++)
     {
         int x = rand_ints[i];
@@ -275,24 +271,20 @@ void run_benchmarks(std::vector<int> &Arr, const int &L, rbt::Rbt &T)
         if (t > worst_t)
         {
             worst_t = t;
-            // worst_x = x;
         }
         if (i % 10000 == 0)
         {
             std::cout << "*";
         }
-        // std::cout << t << " ps for " << x << std::endl; /* Debug */
     }
     std::cout << std::endl;
     std::cout << avg << " ps avg." << std::endl;
     std::cout << worst_t << " ps worst." << std::endl;
-    // std::cout << worst_x << " worst search." << std::endl;
 
     // interpolation search benchmark.
     std::cout << "Interpolation search:" << std::endl;
     avg = 0;
     worst_t = 0;
-    // worst_x = 0;
 
     for (int i = 0; i < total_searches; i++)
     {
@@ -304,25 +296,21 @@ void run_benchmarks(std::vector<int> &Arr, const int &L, rbt::Rbt &T)
         if (t > worst_t)
         {
             worst_t = t;
-            // worst_x = x;
         }
         if (i % 10000 == 0)
         {
             std::cout << "*";
         }
-        // std::cout << t << " ps for " << x << std::endl; /* Debug */
     }
     std::cout << std::endl;
     std::cout << avg << " ps avg." << std::endl;
     std::cout << worst_t << " ps worst." << std::endl;
-    // std::cout << worst_x << " worst search." << std::endl;
 
     // red-black tree search benchmark.
     std::cout << "Red-black tree search:" << std::endl;
     ;
     avg = 0;
     worst_t = 0;
-    // worst_x = 0;
 
     for (int i = 0; i < total_searches; i++)
     {
@@ -334,16 +322,13 @@ void run_benchmarks(std::vector<int> &Arr, const int &L, rbt::Rbt &T)
         if (t > worst_t)
         {
             worst_t = t;
-            // worst_x = x;
         }
         if (i % 10000 == 0)
         {
             std::cout << "*";
         }
-        // std::cout << t << " ps for " << x << std::endl; /* Debug */
     }
     std::cout << std::endl;
     std::cout << avg << " ps avg." << std::endl;
     std::cout << worst_t << " ps worst." << std::endl;
-    // std::cout << worst_x << " worst search." << std::endl;
 }

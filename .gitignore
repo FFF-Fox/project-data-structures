@@ -15,3 +15,5 @@ search_main
 benchmarks
 benchmark_times_var_N.txt
 benchmark_times.txt
+
+plotting.py
